@@ -21,7 +21,7 @@ HandlersProcessor processor = new HandlersProcessor();
 //Chain : false означает что после этого обработчика другие обработчики выполнятся не будут т.к за раз могут выполнятся несколько обработчиков
 //Priority это просто приоритет: по умолчанию он равен нулю.
 processor.Register(new SetState("default", "Операция отменена!"), new CommandFilter("cancel"), "cancel.*", chain: false, priority: 1); 
-//Добавляем остальные обработчики
+//дДобавляем остальные обработчики
 processor.Register(new Help(), new CommandFilter("help", "start"), "default");
 processor.Register(new StateTest(), new CommandFilter("go"), "default");
 processor.Register(new StateTest2(), "cancel.waitname");
@@ -54,7 +54,7 @@ async Task OnMessageAsync(ITelegramBotClient client, Update update, Cancellation
     }
     catch
     {
-
+        
     }
 }
 
