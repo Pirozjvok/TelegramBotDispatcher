@@ -31,7 +31,18 @@ namespace TelegramBotDispatcher.FSM
         {
             return await Storage.GetProperties<T>(User_id, keys);
         }
-
+        public async Task<IReadOnlyDictionary<string, object>> PopProperties(params string[] keys)
+        {
+            return await Storage.GetProperties(User_id, keys);
+        }
+        public async Task<IReadOnlyDictionary<string, T>> PopProperties<T>(params string[] keys)
+        {
+            return await Storage.GetProperties<T>(User_id, keys);
+        }
+        public async Task<object?> PopProperty(string key)
+        {
+            return await Storage.PopProperty(User_id, key);
+        }
         public async Task RemoveProperties(params string[] keys)
         {
             await Storage.DeleteProperties(User_id, keys);
@@ -40,5 +51,7 @@ namespace TelegramBotDispatcher.FSM
         {
             await Storage.SetProperty(User_id, key, value);
         }
+
+
     }
 }

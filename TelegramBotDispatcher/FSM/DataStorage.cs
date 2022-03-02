@@ -17,6 +17,24 @@ namespace TelegramBotDispatcher.FSM
         {
             return (await GetProperties(user_id, keys)).Where(x => x.Value is T).ToDictionary(x => x.Key, x => (T)x.Value);
         }
+        public virtual async Task<IReadOnlyDictionary<string, object>> PopProperties(long user_id, params string[] keys)
+        {
+            IReadOnlyDictionary<string, object> valuePairs = await GetProperties(user_id, keys);
+            await DeleteProperties(user_id, valuePairs.Keys.ToArray());
+            return valuePairs;
+        }
+        public virtual async Task<IReadOnlyDictionary<string, T>> PopProperties<T>(long user_id, params string[] keys)
+        {
+            IReadOnlyDictionary<string, T> valuePairs = await GetProperties<T>(user_id, keys);
+            await DeleteProperties(user_id, valuePairs.Keys.ToArray());
+            return valuePairs;
+        }
+        public virtual async Task<object?> PopProperty(long user_id, string key)
+        {
+            object? value = await GetProperty(user_id, key);
+            await DeleteProperties(user_id, key);
+            return value;
+        }
         public abstract Task DeleteProperties(long user_id, params string[] keys);
     }
 }
